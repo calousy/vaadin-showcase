@@ -1,0 +1,47 @@
+.container-item {
+
+    border-left: 3px solid lightgray;
+    padding: 10px;
+
+    border-bottom: 2px solid #eee;
+}
+
+.container-item .btn-delete {
+    display:none;
+}
+
+.container-item:hover .btn-delete {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    align-self: center;
+}
+
+iron-icon {
+    display: inline-block;
+}
+.status-icon {
+    /* background: red; */
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 3px solid red;
+
+    align-self: center;
+}
+
+.status-processing .status-icon {
+}
+
+.lotid {
+    vertical-align: text-bottom;
+}
+
+.active {
+    background: red;
+}
+
+.recipe {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 70%;
+}
