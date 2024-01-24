@@ -3,7 +3,6 @@ package de.meisl.showcase.views.containerlist;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.HasItems;
 import com.vaadin.flow.shared.Registration;
 
@@ -38,13 +37,14 @@ public class ContainerList extends FlexLayout implements HasItems<Container> {
         if (selected != null) {
             selected.removeClassName("active");
         }
+        fireEvent(new SelectionChangeEvent(it, true));
+
         if (selected == it)
         {
             it = null;
         }
         selected = it;
         if (selected != null) {
-            fireEvent(new SelectionChangeEvent(selected, true));
             selected.addClassName("active");
         }
     }

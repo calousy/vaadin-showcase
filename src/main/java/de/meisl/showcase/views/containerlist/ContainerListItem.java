@@ -11,10 +11,9 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 @CssImport("./styles/views/containerlist/item.css")
 public class ContainerListItem extends FlexLayout {
 
-    private Container container;
+    private final Container container;
 
     public ContainerListItem(Container container) {
-//        setFlexDirection(FlexDirection.COLUMN);
         this.container = container;
 
         setClassName("container-item");

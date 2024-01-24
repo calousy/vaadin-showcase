@@ -1,10 +1,7 @@
 package de.meisl.showcase.views.containerlist;
 
-import ch.qos.logback.core.helpers.CyclicBuffer;
 import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -18,17 +15,25 @@ import java.util.List;
 @PageTitle("Container List")
 public class ContainerListView extends HorizontalLayout {
 
-    private ContainerList containerList;
+    private final ContainerList containerList;
 
-    private VerticalLayout detailView = new VerticalLayout();
+    private final VerticalLayout detailView = new VerticalLayout();
+    private Container currentSelection;
 
     public ContainerListView() {
         containerList = new ContainerList();
         add(containerList, detailView);
         containerList.setWidth("300px");
-        containerList.addSelectionChangeListener(x -> {
+        containerList.addSelectionChangeListener(listener -> {
             detailView.removeAll();
-           detailView.add(new Text(x.getSource().getContainer().getId()));
+            Container newSelection = listener.getSource().getContainer();
+            if (newSelection != currentSelection) {
+                detailView.add(new Text(newSelection.getId()));
+                currentSelection = newSelection;
+            } else {
+                currentSelection = null;
+            }
+
         });
 
         detailView.add(new Text("Nothing selected"));
