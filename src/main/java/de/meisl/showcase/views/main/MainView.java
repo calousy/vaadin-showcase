@@ -11,15 +11,11 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 import de.meisl.showcase.views.about.AboutView;
 import de.meisl.showcase.views.containerlist.ContainerListView;
 import de.meisl.showcase.views.helloworld.HelloWorldView;
@@ -30,10 +26,8 @@ import java.util.Optional;
  * The main view is a top-level placeholder for other views.
  */
 @JsModule("./styles/shared-styles.js")
-@Theme(themeClass = Lumo.class, variant = Lumo.LIGHT)
 @CssImport("./styles/views/main/main-view.css")
-@PWA(name = "Vaadin Showcase", shortName = "Vaadin Showcase")
-public class MainView extends AppLayout implements AppShellConfigurator {
+public class MainView extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
