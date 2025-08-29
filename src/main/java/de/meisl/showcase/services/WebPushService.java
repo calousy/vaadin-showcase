@@ -1,23 +1,24 @@
 package de.meisl.showcase.services;
 
+import com.vaadin.flow.server.webpush.WebPush;
+import com.vaadin.flow.server.webpush.WebPushMessage;
 import com.vaadin.flow.server.webpush.WebPushSubscription;
-import jakarta.annotation.PostConstruct;
-import nl.martijndwars.webpush.Subscription;
+import de.meisl.showcase.webpush.WebPushAction;
+import de.meisl.showcase.webpush.WebPushOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.security.GeneralSecurityException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import com.vaadin.flow.server.webpush.WebPush;
-import com.vaadin.flow.server.webpush.WebPushMessage;
 
 @Service
 public class WebPushService {
 
+    private final Map<String, WebPushSubscription> endpointToSubscription = new HashMap<>();
+    WebPush webPush;
     @Value("${public.key}")
     private String publicKey;
     @Value("${private.key}")
@@ -25,14 +26,9 @@ public class WebPushService {
     @Value("${subject}")
     private String subject;
 
-    private final Map<String, WebPushSubscription> endpointToSubscription = new HashMap<>();
-
-    WebPush webPush;
-
     /**
      * Initialize security and push service for initial get request.
      *
-     * @throws GeneralSecurityException security exception for security complications
      */
     public WebPush getWebPush() {
         if (webPush == null) {
@@ -51,6 +47,19 @@ public class WebPushService {
         endpointToSubscription.values().forEach(subscription -> {
             webPush.sendNotification(subscription, new WebPushMessage(title, body));
         });
+    }
+
+    public void sendNotification(String title, String message, WebPushAction webPushAction,
+                                 String data, String icon) {
+        WebPushOptions webPushOptions = new WebPushOptions(
+                message,
+                List.of(webPushAction),
+                data,
+                icon
+        );
+        new Thread(() -> endpointToSubscription.values().forEach(subscription -> webPush.sendNotification(
+                subscription,
+                new WebPushMessage(title, webPushOptions)))).start();
     }
 
     private Logger getLogger() {

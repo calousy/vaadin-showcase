@@ -12,6 +12,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.webpush.WebPush;
 import de.meisl.showcase.services.WebPushService;
 import de.meisl.showcase.views.main.MainView;
+import de.meisl.showcase.webpush.WebPushAction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "about", layout = MainView.class)
@@ -51,11 +52,19 @@ public class AboutView extends Div {
             });
         });
 
-        TextField message = new TextField("Message");
-        Button broadcast = new Button("Broadcast message");
-        broadcast.addClickListener(e ->
-                webPushService.notifyAll("Message from administration", message.getValue())
+        WebPushAction webPushAction = new WebPushAction(
+                "hello",
+                "Hello World"
         );
+
+        TextField message = new TextField("Message");
+        Button broadcast = new Button("Broadcast message", e -> {
+            webPushService.sendNotification("Message from administration",
+                    message.getValue(), webPushAction, "This is my data",
+                    "https://upload.wikimedia.org/wikipedia/commons/0/0e/Message-icon-blue-symbol-double.png"
+            );
+            //webPushService.notifyAll("Message from administration", message.getValue());
+        });
 
         add(subscribe, unsubscribe, message, broadcast);
 
@@ -68,7 +77,7 @@ public class AboutView extends Div {
         webpush.subscriptionExists(ui, registered -> {
             subscribe.setEnabled(!registered);
             unsubscribe.setEnabled(registered);
-            if(registered && webPushService.isEmpty()) {
+            if (registered && webPushService.isEmpty()) {
                 webpush.fetchExistingSubscription(ui, webPushService::store);
             }
         });
