@@ -11,14 +11,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <vaadin.version>24.8.7</vaadin.version>
+        <vaadin.version>24.9.3</vaadin.version>
 
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.5</version>
+        <version>3.5.7</version>
     </parent>
 
     <repositories>
@@ -110,7 +110,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.44.4</version>
+                <version>3.0.0</version>
                 <configuration>
                     <java>
                         <toggleOffOn/>
@@ -128,7 +128,7 @@
                             <exclude>src/main/frontend/generated/**</exclude>
                         </excludes>
                         <prettier>
-                            <prettierVersion>3.3.3</prettierVersion>
+                            <prettierVersion>3.6.2</prettierVersion>
                             <configFile>${project.basedir}/.prettierrc.json</configFile>
                         </prettier>
                     </typescript>
